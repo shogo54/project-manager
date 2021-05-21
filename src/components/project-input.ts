@@ -1,7 +1,7 @@
-import { Component } from './base-component.js';
-import { Autobind } from '../decorators/autobind.js';
-import { projectState } from '../states/project-state.js';
-import { Validatable, validate } from '../util/validation.js';
+import { Component } from './base-component';
+import { Autobind } from '../decorators/autobind';
+import { projectState } from '../states/project-state';
+import { Validatable, validate } from '../util/validation';
 
 // ProjectInput Class
 export class ProjectInput extends Component<HTMLDivElement, HTMLFontElement> {
@@ -47,7 +47,11 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFontElement> {
       max: 5,
     };
 
-    if(!validate(titleValidatable) || !validate(descriptionValidatable) || !validate(peopleValidatable)){
+    if (
+      !validate(titleValidatable) ||
+      !validate(descriptionValidatable) ||
+      !validate(peopleValidatable)
+    ) {
       alert('Invalid input, please try again!');
       return;
     } else {
@@ -65,11 +69,10 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFontElement> {
   private submitHandler(event: Event) {
     event.preventDefault();
     const userInput = this.gatherUserInput();
-    if(Array.isArray(userInput)) {
+    if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
       projectState.addProject(title, desc, people);
       this.clearInputs();
     }
   }
-
 }

@@ -1,21 +1,21 @@
-import { Component } from './base-component.js';
-import { Autobind } from '../decorators/autobind.js';
-import { Draggable } from '../models/drag-drop.js';
-import { Project } from '../models/proejct.js';
+import { Component } from './base-component';
+import { Autobind } from '../decorators/autobind';
+import { Draggable } from '../models/drag-drop';
+import { Project } from '../models/proejct';
 
 // ProjectItem Class
 export class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
   private project: Project;
 
   get persons() {
-    if(this.project.people === 1) {
+    if (this.project.people === 1) {
       return '1 person';
     } else {
       return `${this.project.people} persons`;
-    } 
+    }
   }
 
-  constructor(hostId: string, project: Project){
+  constructor(hostId: string, project: Project) {
     super('single-project', hostId, false, project.id);
     this.project = project;
 

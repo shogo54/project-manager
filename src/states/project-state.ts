@@ -1,7 +1,7 @@
-import { Project, ProjectStatus } from '../models/proejct.js';
+import { Project, ProjectStatus } from '../models/proejct';
 
-// State 
-type Listener<T> = (items: T[]) => void; 
+// State
+type Listener<T> = (items: T[]) => void;
 
 class State<T> {
   protected listeners: Listener<T>[] = [];
@@ -21,28 +21,34 @@ export class ProjectState extends State<Project> {
   }
 
   static getInstance() {
-    if(!this.instance) {
+    if (!this.instance) {
       this.instance = new ProjectState();
     }
     return this.instance;
   }
 
   addProject(title: string, description: string, numOfPeple: number) {
-    const newProject = new Project(Math.random().toString(), title, description, numOfPeple, ProjectStatus.Active);
+    const newProject = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      numOfPeple,
+      ProjectStatus.Active
+    );
     this.projects.push(newProject);
     this.updateListeners();
   }
 
   moveProject(projectId: string, newStatus: ProjectStatus) {
-    const project = this.projects.find(p => p.id === projectId);
-    if(project && project.status !== newStatus) {
+    const project = this.projects.find((p) => p.id === projectId);
+    if (project && project.status !== newStatus) {
       project.status = newStatus;
       this.updateListeners();
     }
   }
 
   private updateListeners() {
-    for(const listenerFn of this.listeners) {
+    for (const listenerFn of this.listeners) {
       listenerFn(this.projects.slice());
     }
   }
